@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Application.Infrastructure.Persistence;
 using Domain.DTOs;
+using Application.Services.Common;
 
 namespace Application.Services.Concrete
 {
-    public class VehicleBrandService :IVehicleBrandService
+    public class VehicleBrandService : BaseService,IVehicleBrandService
     {
-        private ICarRentalDbContext Context { get; }
+      
 
-        public VehicleBrandService(ICarRentalDbContext context)
+        public VehicleBrandService(ICarRentalDbContext context) : base(context)
         {
-            Context = context;
+            
         }
         
         public Response Add(VehicleBrand vehicleBrand)
