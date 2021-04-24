@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Domain.DTOs
 {
-    public class VehicleBrandFilter
+   public class VehicleModelFilter
     {
-        public string Name { get; set; } = "";
+
     }
 }

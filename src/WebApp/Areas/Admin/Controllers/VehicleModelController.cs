@@ -1,6 +1,6 @@
 ﻿using Application.Services;
+using Application.Services.Concrete;
 using Domain.DTOs;
-using Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,47 +11,47 @@ using System.Threading.Tasks;
 namespace WebApp.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Route("admin /[controller]/[action]")]
-    public class VehicleBrandController : Controller
+    [Route("admin/[controller]/[action]")]
+    public class VehicleModelController : Controller
     {
         private IVehicleBrandService VehicleBrandService { get; }
+        private IVehicleModelService VehicleModelService { get; }
 
-        public VehicleBrandController(IVehicleBrandService vehicleBrandService)
+        public VehicleModelController(IVehicleBrandService vehicleBrandService, IVehicleModelService vehicleModelService)
         {
             VehicleBrandService = vehicleBrandService;
-        }
-        
-        // GET: VehicleBrandController
-        public ActionResult Index()
-        {
-            VehicleBrandFilter filter = new VehicleBrandFilter();
-            var items = VehicleBrandService.Get(filter);
-            return View(items);
-            
+            VehicleModelService = vehicleModelService;
         }
 
-        // GET: VehicleBrandController/Details/5
+        
+        // GET: VehicleModelController
+        public ActionResult Index()
+        {
+            VehicleModelFilter filter = new VehicleModelFilter();
+            var items = VehicleModelService.Get(filter);
+            return View(items);
+        }
+
+        // GET: VehicleModelController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: VehicleBrandController/Create
+        // GET: VehicleModelController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: VehicleBrandController/Create
+        // POST: VehicleModelController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VehicleBrand vehicleBrand)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
-               var response = VehicleBrandService.Add(vehicleBrand);
-                ViewBag.Response = response;
-                return View();    
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -59,23 +59,20 @@ namespace WebApp.Areas.Admin.Controllers
             }
         }
 
-        // GET: VehicleBrandController/Edit/5
+        // GET: VehicleModelController/Edit/5
         public ActionResult Edit(int id)
         {
-            var item = VehicleBrandService.GetById(id);
             return View();
         }
 
-        // POST: VehicleBrandController/Edit/5
+        // POST: VehicleModelController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, VehicleBrand vehicleBrand)
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
-                var response = VehicleBrandService.Update(vehicleBrand);
-                ViewBag.Response = response;
-                return View(vehicleBrand);
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -83,21 +80,19 @@ namespace WebApp.Areas.Admin.Controllers
             }
         }
 
-        // GET: VehicleBrandController/Delete/5
+        // GET: VehicleModelController/Delete/5
         public ActionResult Delete(int id)
         {
-            var item = VehicleBrandService.GetById(id);
-            return View(item);
+            return View();
         }
 
-        // POST: VehicleBrandController/Delete/5
+        // POST: VehicleModelController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                VehicleBrandService.Delete(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
